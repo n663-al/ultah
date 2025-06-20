@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halaman Login</title>
+</head>
+<body>
+
+  <section class="ini">
+    <div class="panjang">
+      <label for="nama">mempertanyakan</label>
+      <div class="div-countainer">
+        <input type="text" id="nama" placeholder="Siapa nama mu" required>
+      </div>
+      <div class="div-countainer">
+        <input type="date" required id="tanggalLahir">
+        <br>*tanggal lahirmu
+    </div>
+      <button type="submit" onclick="simpanNama()">Masuk</button>
+    </div>
+  </section>
+  
+</body>
+</html>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-image: url(IMG_20250127_090950.png);
+  }
+
+  .panjang {
+    background-color: rgba(6, 177, 189, 0.637);
+    padding: 30px;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 2px 2px 20px black;
+  }
+
+  .div-countainer input {
+    background-color: plum;
+    width: 220px;
+    height: 30px;
+    border-radius: 70px 10px 50px;
+    text-align: center;
+    color: black;
+    border: 2px solid #1a0303;
+    margin: 10px;
+  }
+
+  .panjang label {
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: xx-large;
+  }
+
+  .panjang button {
+    background-color: palevioletred;
+    width: 200px;
+    height: 30px;
+    border-radius: 10px;
+    border: 2px solid;
+  }
+</style>
+
+<script>
+  function simpanNama() {
+    const nama = document.getElementById("nama").value;
+    const tanggal = document.getElementById("tanggalLahir").value;
+
+    if (!nama && !tanggal) {
+  alert("Nama dan tanggal lahir harus diisi!");
+} else if (!nama) {
+  alert("Nama harus diisi!");
+} else if (!tanggal) {
+  alert("Tanggal lahir harus diisi!");
+} else {
+  localStorage.setItem("namaPengguna", nama);
+  localStorage.setItem("tanggalLahir", tanggal);
+  window.location.href = "index2.html";
+}
+}
+</script>

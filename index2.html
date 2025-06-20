@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Selamat Datang</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+      background-image: url(IMG_20250127_090950.png);
+    }
+
+    .panjang {
+      background-color: rgba(6, 177, 189, 0.637);
+      padding: 30px;
+      margin: 20px;
+      text-align: center;
+      border-radius: 20px;
+      box-shadow: 2px 2px 20px black;
+      font-weight: bold;
+      font-family: 'Poppins', sans-serif;
+      color: #ffffffe0;
+    }
+
+    .div-countainer input {
+      background-color: plum;
+      width: 220px;
+      height: 30px;
+      border-radius: 70px 10px 50px;
+      text-align: center;
+      color: black;
+      border: 2px solid #1a0303;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <div class="panjang">
+      <h2>Halo, <span id="tampilkan-nama"></span>! Selamat datang di web sederhana ini</h2>
+      <p>Tanggal lahirmu: <span id="tampilkan-tanggal"></span></p>
+      <p id="ucapan-ulangtahun" class="div-countainer"></p>
+      <p id="dia-hidup"></p>
+      <div id="countdown" class="div-countainer"></div>
+    </div>
+  </section>
+
+  <script>
+    const nama = localStorage.getItem("namaPengguna");
+    const tanggalLahir = localStorage.getItem("tanggalLahir");
+    const tampilNama = document.getElementById("tampilkan-nama");
+    const tampilTanggal = document.getElementById("tampilkan-tanggal");
+    const ucapan = document.getElementById("ucapan-ulangtahun");
+    const countdown = document.getElementById("countdown");
+
+    tampilNama.textContent = nama ?? "Tamu";
+    tampilTanggal.textContent = tanggalLahir ?? "-";
+
+    // Sapaan khusus
+    if (
+      nama === "salma" ||
+      nama === "khairani" ||
+      nama === "zahira" ||
+      nama === "khairani salma zahira"
+    ) {
+      alert("Wah kamu masuk web aku, " + nama + "!");
+    } else {
+      alert("Selamat datang, " + nama + "!");
+    }
+
+    if (tanggalLahir) {
+      const lahir = new Date(tanggalLahir);
+      const hariIni = new Date();
+
+      // Fungsi lama hidup
+      function updateLamaHidup() {
+        const sekarang = new Date();
+        const selisihHidup = sekarang - lahir;
+
+        const hariHidup = Math.floor(selisihHidup / (1000 * 60 * 60 * 24));
+        const jamHidup = Math.floor((selisihHidup / (1000 * 60 * 60)) % 24);
+        const menitHidup = Math.floor((selisihHidup / (1000 * 60)) % 60);
+        const detikHidup = Math.floor((selisihHidup / 1000) % 60);
+
+        const tampilHidup = document.getElementById("dia-hidup");
+        tampilHidup.textContent =
+          `Kamu telah hidup selama ${hariHidup} hari, ${jamHidup} jam, ${menitHidup} menit, ${detikHidup} detik.
+           bukti kamu itu kuat.`;
+           document.getElementById("dia-hidup").style.color = "pink";
+                                              
+      }
+
+      updateLamaHidup();
+      setInterval(updateLamaHidup, 1000);
+
+      // Ulang tahun
+      let ulangTahun = new Date(hariIni.getFullYear(), lahir.getMonth(), lahir.getDate());
+
+      if (ulangTahun < hariIni) {
+        ulangTahun.setFullYear(hariIni.getFullYear() + 1);
+      }
+
+      let umur = hariIni.getFullYear() - lahir.getFullYear();
+      const belumUltah =
+        hariIni.getMonth() < lahir.getMonth() ||
+        (hariIni.getMonth() === lahir.getMonth() && hariIni.getDate() < lahir.getDate());
+
+      if (belumUltah) umur--;
+
+      const ulangTahunHariIni =
+        hariIni.getDate() === ulangTahun.getDate() &&
+        hariIni.getMonth() === ulangTahun.getMonth();
+
+      if (ulangTahunHariIni) {
+        ucapan.textContent = `🎉 Selamat ulang tahun ke-${umur + 1}, ${nama}! 🎂`;
+        alert(`🎉 Selamat ulang tahun ke-${umur + 1}, ${nama}! 🎂`);
+      } else {
+        function updateCountdown() {
+          const sekarang = new Date();
+          const selisih = ulangTahun - sekarang;
+
+          const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
+          const jam = Math.floor((selisih / (1000 * 60 * 60)) % 24);
+          const menit = Math.floor((selisih / (1000 * 60)) % 60);
+          const detik = Math.floor((selisih / 1000) % 60);
+
+          countdown.textContent =
+            `Masi lama ulang tahun kamu ke-${umur + 1}, sekitar ${hari} hari, ${jam} jam, ${menit} menit, ${detik} detik lagi.`;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+      }
+    }
+  </script>
+</body>
+</html>
